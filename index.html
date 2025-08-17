@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Ugphone - Download Clients</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    /* Video nền */
+    .video-background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .video-background iframe {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 120%; height: 120%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Nội dung */
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px;
+      color: white;
+    }
+    .content h1 {
+      font-size: 48px;
+      font-weight: 900;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+      margin-bottom: 20px;
+    }
+    .content p {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 60px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .buttons a {
+      display: inline-block;
+      margin: 8px;
+      padding: 12px 24px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+    .buttons a:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* Nút bật/tắt tiếng */
+    .sound-btn {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      z-index: 2;
+      padding: 10px 20px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+    .sound-btn:hover {
+      background: rgba(0,0,0,0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Video YouTube nền -->
+  <div class="video-background">
+    <iframe id="bg-video"
+      src="https://www.youtube.com/embed/w4ANXtInE5o?autoplay=1&mute=1&loop=1&playlist=w4ANXtInE5o&controls=0&showinfo=0&modestbranding=1&fs=0&iv_load_policy=3&enablejsapi=1"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- Nội dung -->
+  <div class="content">
+    <h1>Ugphone - Download Clients</h1>
+    <p><b>Các bản clone & file login</b></p>
+    <div class="buttons">
+      <a href="https://gofile.io/d/0yGRzF">Client Delta QT 2.684 (clone)</a>
+      <a href="https://gofile.io/d/0yGRzF">File login VNG Client Delta</a>
+      <a href="https://gofile.io/d/6zCkgB">Client ArceusX QT 2.684/1.7.7</a>
+      <a href="https://gofile.io/d/6zCkgB">Client CodeX QT 2.684</a>
+      <a href="https://gofile.io/d/wRZmnn">Client Cryptic QT 2.684</a>
+      <a href="https://gofile.io/d/wRZmnn">Client Ronix quốc tế</a>
+      <a href="https://gofile.io/d/EPTEWr">Client Trigon quốc tế</a>
+      <a href="https://gofile.io/d/TVTQAQ">File login VNG Client Trigon</a>
+      <a href="https://gofile.io/d/qYqrkd">Client FrostWare quốc tế</a>
+      <a href="https://gofile.io/d/3efCho">File login VNG Client FrostWare</a>
+    </div>
+  </div>
+
+  <!-- Nút bật/tắt tiếng -->
+  <button class="sound-btn" onclick="toggleSound()">🔊 Bật tiếng</button>
+
+  <script>
+    let isMuted = true;
+    function toggleSound() {
+      const iframe = document.getElementById("bg-video").contentWindow;
+      if (isMuted) {
+        iframe.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+        document.querySelector(".sound-btn").innerText = "🔇 Tắt tiếng";
+      } else {
+        iframe.postMessage('{"event":"command","func":"mute","args":""}', '*');
+        document.querySelector(".sound-btn").innerText = "🔊 Bật tiếng";
+      }
+      isMuted = !isMuted;
+    }
+  </script>
+
+</body>
+</html>
