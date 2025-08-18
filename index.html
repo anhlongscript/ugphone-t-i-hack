@@ -54,7 +54,7 @@
       margin-bottom: 30px;
     }
 
-    /* Danh sách link: ngang + wrap */
+    /* Danh sách link */
     .buttons {
       display: flex;
       flex-wrap: wrap;
@@ -163,10 +163,11 @@
       z-index: 1001;
     }
 
+    /* HUD (ẩn mặc định) */
     .hud {
       position: fixed;
       top: 70px;
-      right: -270px;
+      right: -300px; /* mặc định giấu ngoài màn hình */
       width: 250px;
       background: rgba(0,0,0,0.85);
       border: 1px solid #0f0;
@@ -180,7 +181,7 @@
       color: #0f0;
     }
     .hud.active {
-      right: 20px;
+      right: 20px; /* khi bật thì hiện vào màn hình */
     }
     .hud h3 {
       margin: 0 0 10px 0;
@@ -263,7 +264,7 @@
   <!-- Nút HUD toggle -->
   <div class="hud-toggle" onclick="toggleHUD()">⚙</div>
 
-  <!-- HUD -->
+  <!-- HUD (ẩn ban đầu) -->
   <div class="hud" id="hud">
     <h3>🔔 Last Update</h3>
     <ul>
