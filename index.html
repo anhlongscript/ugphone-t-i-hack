@@ -49,7 +49,7 @@
     }
     .note {
       font-size: 14px;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.5);
       font-style: italic;
       margin-bottom: 40px;
     }
@@ -135,10 +135,9 @@
   <!-- Video YouTube nền -->
   <div class="video-background">
     <iframe id="bg-video"
-      src="https://www.youtube.com/embed/w4ANXtInE5o?autoplay=1&mute=1&loop=1&playlist=w4ANXtInE5o&controls=0&showinfo=0&modestbranding=1&fs=0&iv_load_policy=3&enablejsapi=1"
+      src="https://www.youtube.com/embed/w4ANXtInE5o?autoplay=1&mute=1&loop=1&playlist=w4ANXtInE5o&controls=0&modestbranding=1&iv_load_policy=3&enablejsapi=1"
       frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
+      allow="autoplay; encrypted-media">
     </iframe>
   </div>
 
@@ -203,7 +202,13 @@
 
     function toggleSound() {
       const iframe = document.getElementById("bg-video");
-      iframe.contentWindow.postMessage('{"event":"command","func":"' + (isMuted ? 'unMute' : 'mute') + '","args":""}', '*');
+      iframe.contentWindow.postMessage(
+        JSON.stringify({
+          event: "command",
+          func: isMuted ? "unMute" : "mute",
+          args: []
+        }), "*"
+      );
       document.querySelector(".sound-btn").innerText = isMuted ? "🔇 Tắt tiếng" : "🔊 Bật tiếng";
       isMuted = !isMuted;
     }
@@ -216,8 +221,12 @@
         setTimeout(() => toast.classList.remove("show"), 1500);
 
         // Hiệu ứng nút copy
+        btn.textContent = "✅";
         btn.classList.add("copied");
-        setTimeout(() => btn.classList.remove("copied"), 1500);
+        setTimeout(() => {
+          btn.textContent = "📋";
+          btn.classList.remove("copied");
+        }, 1500);
       });
     }
   </script>
