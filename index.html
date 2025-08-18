@@ -47,7 +47,6 @@
       margin-bottom: 20px;
       color: rgba(255,255,255,0.9);
     }
-    /* Chữ mờ phụ */
     .note {
       font-size: 14px;
       color: rgba(255,255,255,0.6);
@@ -88,9 +87,11 @@
       border-radius: 6px;
       cursor: pointer;
       font-size: 16px;
+      transition: background 0.3s, color 0.3s;
     }
-    .copy-btn:hover {
-      background: rgba(255,255,255,0.4);
+    .copy-btn.copied {
+      background: rgba(0,255,0,0.6);
+      color: black;
     }
 
     /* Thông báo copied */
@@ -103,7 +104,7 @@
       border-radius: 6px;
       font-size: 14px;
       opacity: 0;
-      transition: opacity 0.3s;
+      transition: opacity 0.5s;
       z-index: 3;
     }
     .toast.show {
@@ -146,46 +147,47 @@
     <h1>Ugphone - Download Clients</h1>
     <p><b>Các bản clone & file login</b></p>
     <p class="note">Các link được lấy ở YTB ANYA BLOX TRÁI CÂY</p>
+
     <div class="buttons">
       <div class="link-box">
         <a href="https://gofile.io/d/0yGRzF">Client Delta QT 2.684 (clone)</a>
-        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/0yGRzF')">📋</button>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/0yGRzF')">📋</button>
       </div>
       <div class="link-box">
         <a href="https://gofile.io/d/S9VMha">File login VNG Client Delta</a>
-        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/S9VMha')">📋</button>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/S9VMha')">📋</button>
       </div>
       <div class="link-box">
         <a href="https://gofile.io/d/6zCkgB">Client ArceusX QT 2.684/1.7.7</a>
-        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/6zCkgB')">📋</button>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/6zCkgB')">📋</button>
       </div>
       <div class="link-box">
         <a href="https://gofile.io/d/6zCkgB">Client CodeX QT 2.684</a>
-        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/6zCkgB')">📋</button>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/6zCkgB')">📋</button>
       </div>
       <div class="link-box">
         <a href="https://gofile.io/d/wRZmnn">Client Cryptic QT 2.684</a>
-        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/wRZmnn')">📋</button>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/wRZmnn')">📋</button>
       </div>
       <div class="link-box">
         <a href="https://gofile.io/d/wRZmnn">Client Ronix quốc tế</a>
-        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/wRZmnn')">📋</button>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/wRZmnn')">📋</button>
       </div>
       <div class="link-box">
         <a href="https://gofile.io/d/EPTEWr">Client Trigon quốc tế</a>
-        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/EPTEWr')">📋</button>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/EPTEWr')">📋</button>
       </div>
       <div class="link-box">
         <a href="https://gofile.io/d/TVTQAQ">File login VNG Client Trigon</a>
-        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/TVTQAQ')">📋</button>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/TVTQAQ')">📋</button>
       </div>
       <div class="link-box">
         <a href="https://gofile.io/d/qYqrkd">Client FrostWare quốc tế</a>
-        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/qYqrkd')">📋</button>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/qYqrkd')">📋</button>
       </div>
       <div class="link-box">
         <a href="https://gofile.io/d/3efCho">File login VNG Client FrostWare</a>
-        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/3efCho')">📋</button>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/3efCho')">📋</button>
       </div>
     </div>
   </div>
@@ -198,23 +200,24 @@
 
   <script>
     let isMuted = true;
+
     function toggleSound() {
-      const iframe = document.getElementById("bg-video").contentWindow;
-      if (isMuted) {
-        iframe.postMessage('{"event":"command","func":"unMute","args":""}', '*');
-        document.querySelector(".sound-btn").innerText = "🔇 Tắt tiếng";
-      } else {
-        iframe.postMessage('{"event":"command","func":"mute","args":""}', '*');
-        document.querySelector(".sound-btn").innerText = "🔊 Bật tiếng";
-      }
+      const iframe = document.getElementById("bg-video");
+      iframe.contentWindow.postMessage('{"event":"command","func":"' + (isMuted ? 'unMute' : 'mute') + '","args":""}', '*');
+      document.querySelector(".sound-btn").innerText = isMuted ? "🔇 Tắt tiếng" : "🔊 Bật tiếng";
       isMuted = !isMuted;
     }
 
-    function copyLink(link) {
+    function copyLink(btn, link) {
       navigator.clipboard.writeText(link).then(() => {
+        // Toast
         let toast = document.getElementById("toast");
         toast.classList.add("show");
         setTimeout(() => toast.classList.remove("show"), 1500);
+
+        // Hiệu ứng nút copy
+        btn.classList.add("copied");
+        setTimeout(() => btn.classList.remove("copied"), 1500);
       });
     }
   </script>
