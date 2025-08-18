@@ -42,45 +42,54 @@
       margin-bottom: 20px;
     }
     .content p {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       color: rgba(255,255,255,0.9);
     }
     .note {
       font-size: 14px;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.6);
       font-style: italic;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
-    /* Link + nút copy */
+    /* Danh sách link */
     .buttons {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       align-items: center;
     }
     .link-box {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      width: 500px;
+      padding: 12px 16px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(0,255,255,0.4);
+      border-radius: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .link-box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(0,255,255,0.6);
     }
     .link-box a {
-      display: inline-block;
-      padding: 12px 24px;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
+      flex: 1;
+      text-align: left;
+      color: #00ffcc;
+      font-weight: bold;
       text-decoration: none;
-      border-radius: 8px;
-      font-weight: 700;
-      transition: background 0.2s;
+      font-size: 16px;
+      transition: color 0.2s;
     }
     .link-box a:hover {
-      background: rgba(255,255,255,0.3);
+      color: #fff;
     }
     .copy-btn {
-      padding: 10px 14px;
+      padding: 8px 12px;
       background: rgba(255,255,255,0.2);
       color: white;
       border: none;
@@ -90,7 +99,7 @@
       transition: background 0.3s, color 0.3s;
     }
     .copy-btn.copied {
-      background: rgba(0,255,0,0.6);
+      background: rgba(0,255,0,0.7);
       color: black;
     }
 
@@ -144,48 +153,48 @@
   <!-- Nội dung -->
   <div class="content">
     <h1>Ugphone - Download Clients</h1>
-    <p><b>Các bản clone & file login</b></p>
-    <p class="note">Các link được lấy ở YTB ANYA BLOX TRÁI CÂY</p>
+    <p>Các bản clone & file login</p>
+    <p class="note">Nguồn link từ kênh YouTube ANYA BLOX TRÁI CÂY</p>
 
     <div class="buttons">
       <div class="link-box">
-        <a href="https://gofile.io/d/0yGRzF">Client Delta QT 2.684 (clone)</a>
+        <a href="https://gofile.io/d/0yGRzF" target="_blank">📥 Client Delta QT 2.684 (clone)</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/0yGRzF')">📋</button>
       </div>
       <div class="link-box">
-        <a href="https://gofile.io/d/S9VMha">File login VNG Client Delta</a>
+        <a href="https://gofile.io/d/S9VMha" target="_blank">📥 File login VNG Client Delta</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/S9VMha')">📋</button>
       </div>
       <div class="link-box">
-        <a href="https://gofile.io/d/6zCkgB">Client ArceusX QT 2.684/1.7.7</a>
+        <a href="https://gofile.io/d/6zCkgB" target="_blank">📥 Client ArceusX QT 2.684/1.7.7</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/6zCkgB')">📋</button>
       </div>
       <div class="link-box">
-        <a href="https://gofile.io/d/6zCkgB">Client CodeX QT 2.684</a>
+        <a href="https://gofile.io/d/6zCkgB" target="_blank">📥 Client CodeX QT 2.684</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/6zCkgB')">📋</button>
       </div>
       <div class="link-box">
-        <a href="https://gofile.io/d/wRZmnn">Client Cryptic QT 2.684</a>
+        <a href="https://gofile.io/d/wRZmnn" target="_blank">📥 Client Cryptic QT 2.684</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/wRZmnn')">📋</button>
       </div>
       <div class="link-box">
-        <a href="https://gofile.io/d/wRZmnn">Client Ronix quốc tế</a>
+        <a href="https://gofile.io/d/wRZmnn" target="_blank">📥 Client Ronix quốc tế</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/wRZmnn')">📋</button>
       </div>
       <div class="link-box">
-        <a href="https://gofile.io/d/EPTEWr">Client Trigon quốc tế</a>
+        <a href="https://gofile.io/d/EPTEWr" target="_blank">📥 Client Trigon quốc tế</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/EPTEWr')">📋</button>
       </div>
       <div class="link-box">
-        <a href="https://gofile.io/d/TVTQAQ">File login VNG Client Trigon</a>
+        <a href="https://gofile.io/d/TVTQAQ" target="_blank">📥 File login VNG Client Trigon</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/TVTQAQ')">📋</button>
       </div>
       <div class="link-box">
-        <a href="https://gofile.io/d/qYqrkd">Client FrostWare quốc tế</a>
+        <a href="https://gofile.io/d/qYqrkd" target="_blank">📥 Client FrostWare quốc tế</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/qYqrkd')">📋</button>
       </div>
       <div class="link-box">
-        <a href="https://gofile.io/d/3efCho">File login VNG Client FrostWare</a>
+        <a href="https://gofile.io/d/3efCho" target="_blank">📥 File login VNG Client FrostWare</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/3efCho')">📋</button>
       </div>
     </div>
@@ -195,7 +204,7 @@
   <button class="sound-btn" onclick="toggleSound()">🔊 Bật tiếng</button>
 
   <!-- Thông báo copied -->
-  <div id="toast" class="toast">Đã copy link!</div>
+  <div id="toast" class="toast">✅ Đã copy link!</div>
 
   <script>
     let isMuted = true;
