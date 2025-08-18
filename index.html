@@ -55,9 +55,20 @@
       margin-bottom: 40px;
     }
 
-    .buttons a {
+    /* Link + nút copy */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+    .link-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .link-box a {
       display: inline-block;
-      margin: 8px;
       padding: 12px 24px;
       background: rgba(0,0,0,0.6);
       color: #fff;
@@ -66,8 +77,37 @@
       font-weight: 700;
       transition: background 0.2s;
     }
-    .buttons a:hover {
+    .link-box a:hover {
       background: rgba(255,255,255,0.3);
+    }
+    .copy-btn {
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .copy-btn:hover {
+      background: rgba(255,255,255,0.4);
+    }
+
+    /* Thông báo copied */
+    .toast {
+      position: fixed;
+      bottom: 60px; right: 20px;
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 3;
+    }
+    .toast.show {
+      opacity: 1;
     }
 
     /* Nút bật/tắt tiếng */
@@ -107,21 +147,54 @@
     <p><b>Các bản clone & file login</b></p>
     <p class="note">Các link được lấy ở YTB ANYA BLOX TRÁI CÂY</p>
     <div class="buttons">
-      <a href="https://gofile.io/d/0yGRzF">Client Delta QT 2.684 (clone)</a>
-      <a href="https://gofile.io/d/S9VMha">File login VNG Client Delta</a>
-      <a href="https://gofile.io/d/6zCkgB">Client ArceusX QT 2.684/1.7.7</a>
-      <a href="https://gofile.io/d/6zCkgB">Client CodeX QT 2.684</a>
-      <a href="https://gofile.io/d/wRZmnn">Client Cryptic QT 2.684</a>
-      <a href="https://gofile.io/d/wRZmnn">Client Ronix quốc tế</a>
-      <a href="https://gofile.io/d/EPTEWr">Client Trigon quốc tế</a>
-      <a href="https://gofile.io/d/TVTQAQ">File login VNG Client Trigon</a>
-      <a href="https://gofile.io/d/qYqrkd">Client FrostWare quốc tế</a>
-      <a href="https://gofile.io/d/3efCho">File login VNG Client FrostWare</a>
+      <div class="link-box">
+        <a href="https://gofile.io/d/0yGRzF">Client Delta QT 2.684 (clone)</a>
+        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/0yGRzF')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/S9VMha">File login VNG Client Delta</a>
+        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/S9VMha')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/6zCkgB">Client ArceusX QT 2.684/1.7.7</a>
+        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/6zCkgB')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/6zCkgB">Client CodeX QT 2.684</a>
+        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/6zCkgB')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/wRZmnn">Client Cryptic QT 2.684</a>
+        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/wRZmnn')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/wRZmnn">Client Ronix quốc tế</a>
+        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/wRZmnn')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/EPTEWr">Client Trigon quốc tế</a>
+        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/EPTEWr')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/TVTQAQ">File login VNG Client Trigon</a>
+        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/TVTQAQ')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/qYqrkd">Client FrostWare quốc tế</a>
+        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/qYqrkd')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/3efCho">File login VNG Client FrostWare</a>
+        <button class="copy-btn" onclick="copyLink('https://gofile.io/d/3efCho')">📋</button>
+      </div>
     </div>
   </div>
 
   <!-- Nút bật/tắt tiếng -->
   <button class="sound-btn" onclick="toggleSound()">🔊 Bật tiếng</button>
+
+  <!-- Thông báo copied -->
+  <div id="toast" class="toast">Đã copy link!</div>
 
   <script>
     let isMuted = true;
@@ -135,6 +208,14 @@
         document.querySelector(".sound-btn").innerText = "🔊 Bật tiếng";
       }
       isMuted = !isMuted;
+    }
+
+    function copyLink(link) {
+      navigator.clipboard.writeText(link).then(() => {
+        let toast = document.getElementById("toast");
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 1500);
+      });
     }
   </script>
 
