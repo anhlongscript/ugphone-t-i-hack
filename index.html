@@ -142,6 +142,58 @@
     .sound-btn:hover {
       background: rgba(0,0,0,0.8);
     }
+
+    /* HUD toggle */
+    .hud-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #111;
+      border: 1px solid #0f0;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #0f0;
+      font-size: 20px;
+      box-shadow: 0 0 10px #0f0;
+      z-index: 1001;
+    }
+
+    .hud {
+      position: fixed;
+      top: 70px;
+      right: -270px;
+      width: 250px;
+      background: rgba(0,0,0,0.85);
+      border: 1px solid #0f0;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 0 15px #0f0;
+      font-size: 14px;
+      line-height: 1.4em;
+      transition: right 0.3s ease;
+      z-index: 1000;
+      color: #0f0;
+    }
+    .hud.active {
+      right: 20px;
+    }
+    .hud h3 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      color: #0ff;
+    }
+    .hud ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+    .hud li {
+      margin-bottom: 6px;
+    }
   </style>
 </head>
 <body>
@@ -208,6 +260,19 @@
   <!-- Nút bật/tắt tiếng -->
   <button class="sound-btn" onclick="toggleSound()">🔊 Bật tiếng</button>
 
+  <!-- Nút HUD toggle -->
+  <div class="hud-toggle" onclick="toggleHUD()">⚙</div>
+
+  <!-- HUD -->
+  <div class="hud" id="hud">
+    <h3>🔔 Last Update</h3>
+    <ul>
+      <li>17/08/2025: Fix auto-login</li>
+      <li>Thêm client mới</li>
+      <li>Ổn định tốc độ load</li>
+    </ul>
+  </div>
+
   <!-- Thông báo copied -->
   <div id="toast" class="toast">✅ Đã copy link!</div>
 
@@ -240,6 +305,10 @@
           btn.classList.remove("copied");
         }, 1500);
       });
+    }
+
+    function toggleHUD() {
+      document.getElementById("hud").classList.toggle("active");
     }
   </script>
 
