@@ -54,7 +54,7 @@
       margin-bottom: 30px;
     }
 
-    /* Danh sách link */
+    /* Danh sách link: ngang + wrap */
     .buttons {
       display: flex;
       flex-wrap: wrap;
@@ -163,11 +163,10 @@
       z-index: 1001;
     }
 
-    /* HUD (ẩn mặc định) */
     .hud {
       position: fixed;
       top: 70px;
-      right: -300px; /* mặc định giấu ngoài màn hình */
+      right: -270px;
       width: 250px;
       background: rgba(0,0,0,0.85);
       border: 1px solid #0f0;
@@ -181,7 +180,7 @@
       color: #0f0;
     }
     .hud.active {
-      right: 20px; /* khi bật thì hiện vào màn hình */
+      right: 20px;
     }
     .hud h3 {
       margin: 0 0 10px 0;
@@ -194,30 +193,6 @@
     }
     .hud li {
       margin-bottom: 6px;
-    }
-    .hud textarea {
-      width: 100%;
-      border-radius: 6px;
-      padding: 6px;
-      border: 1px solid #0f0;
-      background: rgba(0,0,0,0.6);
-      color: #0f0;
-      resize: none;
-      margin-top: 8px;
-    }
-    .hud button {
-      margin-top: 6px;
-      padding: 6px 12px;
-      background: #0f0;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      color: black;
-      width: 100%;
-    }
-    .hud button:hover {
-      background: #0c0;
     }
   </style>
 </head>
@@ -239,12 +214,46 @@
     <p class="note">Nguồn link từ kênh YouTube ANYA BLOX TRÁI CÂY</p>
 
     <div class="buttons">
-      <!-- ví dụ 1 link -->
       <div class="link-box">
         <a href="https://gofile.io/d/0yGRzF" target="_blank">📥 Client Delta QT 2.684 (clone)</a>
         <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/0yGRzF')">📋</button>
       </div>
-      <!-- thêm link khác của bạn ở đây -->
+      <div class="link-box">
+        <a href="https://gofile.io/d/S9VMha" target="_blank">📥 File login VNG Client Delta</a>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/S9VMha')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/6zCkgB" target="_blank">📥 Client ArceusX QT 2.684/1.7.7</a>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/6zCkgB')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/6zCkgB" target="_blank">📥 Client CodeX QT 2.684</a>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/6zCkgB')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/wRZmnn" target="_blank">📥 Client Cryptic QT 2.684</a>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/wRZmnn')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/wRZmnn" target="_blank">📥 Client Ronix quốc tế</a>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/wRZmnn')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/EPTEWr" target="_blank">📥 Client Trigon quốc tế</a>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/EPTEWr')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/TVTQAQ" target="_blank">📥 File login VNG Client Trigon</a>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/TVTQAQ')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/qYqrkd" target="_blank">📥 Client FrostWare quốc tế</a>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/qYqrkd')">📋</button>
+      </div>
+      <div class="link-box">
+        <a href="https://gofile.io/d/3efCho" target="_blank">📥 File login VNG Client FrostWare</a>
+        <button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/3efCho')">📋</button>
+      </div>
     </div>
   </div>
 
@@ -262,13 +271,9 @@
       <li>Thêm client mới</li>
       <li>Ổn định tốc độ load</li>
     </ul>
-
-    <h3>💬 Góp ý cho Admin</h3>
-    <textarea id="feedback" rows="3" placeholder="Nhập góp ý..."></textarea>
-    <button onclick="sendFeedback()">Gửi</button>
   </div>
 
-  <!-- Thông báo -->
+  <!-- Thông báo copied -->
   <div id="toast" class="toast">✅ Đã copy link!</div>
 
   <script>
@@ -289,7 +294,10 @@
 
     function copyLink(btn, link) {
       navigator.clipboard.writeText(link).then(() => {
-        showToast("✅ Đã copy link!");
+        let toast = document.getElementById("toast");
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 1500);
+
         btn.textContent = "✅";
         btn.classList.add("copied");
         setTimeout(() => {
@@ -301,23 +309,6 @@
 
     function toggleHUD() {
       document.getElementById("hud").classList.toggle("active");
-    }
-
-    function sendFeedback() {
-      let feedback = document.getElementById("feedback").value.trim();
-      if(feedback){
-        showToast("📩 Góp ý đã gửi cho Admin!");
-        document.getElementById("feedback").value = "";
-      } else {
-        showToast("⚠ Vui lòng nhập góp ý!");
-      }
-    }
-
-    function showToast(msg){
-      let toast = document.getElementById("toast");
-      toast.innerText = msg;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 1500);
     }
   </script>
 
