@@ -1,46 +1,109 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Ugphone - Download Clients</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; overflow: hidden; }
+    body { font-family: Arial, sans-serif; overflow-x: hidden; }
+
     /* Video nền */
-    .video-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; pointer-events: none; }
-    .video-background iframe { position: absolute; top: 50%; left: 50%; width: 120%; height: 120%; transform: translate(-50%, -50%); }
+    .video-background { position: fixed; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
+    .video-background iframe { position: absolute; top: 50%; left: 50%;
+      width: 120%; height: 120%; transform: translate(-50%, -50%); }
+
     /* Nội dung */
-    .content { position: relative; z-index: 1; text-align: center; padding: 40px; color: white; }
-    .content h1 { font-size: 48px; font-weight: 900; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); margin-bottom: 20px; }
-    .content p { font-size: 20px; font-weight: bold; margin-bottom: 15px; color: rgba(255,255,255,0.9); }
-    .note { font-size: 14px; color: rgba(255,255,255,0.6); font-style: italic; margin-bottom: 30px; }
+    .content { position: relative; z-index: 1; text-align: center; padding: 40px 20px; color: white; }
+    .content h1 { font-size: 48px; font-weight: 900; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); margin-bottom: 10px; }
+    .content p { font-size: 20px; font-weight: bold; margin-bottom: 10px; color: rgba(255,255,255,0.9); }
+    .note { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; margin-bottom: 12px; }
+
+    /* Nút SUBSCRIBE */
+    .subscribe-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin: 16px 0 28px; padding: 12px 24px;
+      background-color: #ff3b30; color: #fff; font-weight: 800; font-size: 18px;
+      border-radius: 999px; cursor: pointer; text-decoration: none;
+      box-shadow: 0 6px 16px rgba(255,59,48,0.45), inset 0 -2px 0 rgba(0,0,0,0.15);
+      transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+      user-select: none;
+      animation: pulse 1.8s infinite ease-in-out;
+    }
+    .subscribe-btn:hover { background-color: #e02d23; transform: translateY(-1px) scale(1.03); }
+    .subscribe-btn:active { transform: translateY(0) scale(0.99); }
+    .subscribe-btn .dot { font-size: 20px; }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 16px rgba(255,59,48,0.45), 0 0 0 0 rgba(255,59,48,0.4); }
+      50% { box-shadow: 0 6px 16px rgba(255,59,48,0.55), 0 0 0 12px rgba(255,59,48,0); }
+    }
+
     /* Danh sách link */
     .buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
-    .link-box { display: flex; align-items: center; justify-content: space-between; min-width: 260px; max-width: 320px; padding: 12px 16px; background: rgba(0,0,0,0.5); border: 1px solid rgba(0,255,255,0.4); border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; }
-    .link-box:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0,255,255,0.6); }
-    .link-box a { flex: 1; text-align: left; color: #00ffcc; font-weight: bold; text-decoration: none; font-size: 14px; transition: color 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .link-box {
+      display: flex; align-items: center; justify-content: space-between;
+      min-width: 260px; max-width: 340px; padding: 12px 16px;
+      background: rgba(0,0,0,0.5); border: 1px solid rgba(0,255,255,0.35);
+      border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(2px);
+    }
+    .link-box:hover { transform: translateY(-2px); box-shadow: 0 0 15px rgba(0,255,255,0.6); }
+    .link-box a {
+      flex: 1; text-align: left; color: #00ffcc; font-weight: bold;
+      text-decoration: none; font-size: 14px; transition: color 0.2s;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
     .link-box a:hover { color: #fff; }
-    .copy-btn { margin-left: 8px; padding: 6px 10px; background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: background 0.3s, color 0.3s; }
+    .copy-btn {
+      margin-left: 8px; padding: 6px 10px; background: rgba(255,255,255,0.2);
+      color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;
+      transition: background 0.3s, color 0.3s;
+    }
     .copy-btn.copied { background: rgba(0,255,0,0.7); color: black; }
+
     /* Thông báo copied */
-    .toast { position: fixed; bottom: 60px; right: 20px; background: rgba(0,0,0,0.8); color: #fff; padding: 10px 20px; border-radius: 6px; font-size: 14px; opacity: 0; transition: opacity 0.5s; z-index: 3; }
+    .toast { position: fixed; bottom: 60px; right: 20px; background: rgba(0,0,0,0.85);
+      color: #fff; padding: 10px 20px; border-radius: 6px; font-size: 14px;
+      opacity: 0; transition: opacity 0.4s; z-index: 3; }
     .toast.show { opacity: 1; }
+
     /* Nút bật/tắt tiếng */
-    .sound-btn { position: fixed; bottom: 20px; right: 20px; z-index: 2; padding: 10px 20px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; transition: background 0.2s; }
+    .sound-btn { position: fixed; bottom: 20px; right: 20px; z-index: 2;
+      padding: 10px 20px; background: rgba(0,0,0,0.6); color: white; border: none;
+      border-radius: 8px; cursor: pointer; font-size: 16px; transition: background 0.2s; }
     .sound-btn:hover { background: rgba(0,0,0,0.8); }
+
     /* HUD toggle */
-    .hud-toggle { position: fixed; top: 20px; right: 20px; background: #111; border: 1px solid #0f0; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #0f0; font-size: 20px; box-shadow: 0 0 10px #0f0; z-index: 1001; }
-    .hud { position: fixed; top: 70px; right: -270px; width: 250px; background: rgba(0,0,0,0.85); border: 1px solid #0f0; border-radius: 12px; padding: 15px; box-shadow: 0 0 15px #0f0; font-size: 14px; line-height: 1.4em; transition: right 0.3s ease; z-index: 1000; color: #0f0; }
+    .hud-toggle {
+      position: fixed; top: 20px; right: 20px; background: #111; border: 1px solid #0f0;
+      border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #0f0; font-size: 20px; box-shadow: 0 0 10px #0f0; z-index: 1001;
+    }
+    .hud {
+      position: fixed; top: 70px; right: -270px; width: 260px;
+      background: rgba(0,0,0,0.85); border: 1px solid #0f0; border-radius: 12px;
+      padding: 15px; box-shadow: 0 0 15px #0f0; font-size: 14px; line-height: 1.4em;
+      transition: right 0.3s ease; z-index: 1000; color: #0f0;
+    }
     .hud.active { right: 20px; }
     .hud h3 { margin: 0 0 10px 0; font-size: 16px; color: #0ff; }
     .hud ul { padding-left: 20px; margin: 0; }
     .hud li { margin-bottom: 6px; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .content h1 { font-size: 34px; }
+      .content p { font-size: 16px; }
+      .subscribe-btn { font-size: 16px; padding: 10px 18px; }
+    }
   </style>
 </head>
 <body>
   <!-- Video YouTube nền -->
   <div class="video-background">
-    <iframe id="bg-video" src="https://www.youtube.com/embed/w4ANXtInE5o?autoplay=1&mute=1&loop=1&playlist=w4ANXtInE5o&controls=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+    <iframe id="bg-video"
+      src="https://www.youtube.com/embed/w4ANXtInE5o?autoplay=1&mute=1&loop=1&playlist=w4ANXtInE5o&controls=0&modestbranding=1&iv_load_policy=3&enablejsapi=1"
+      frameborder="0" allow="autoplay; encrypted-media"></iframe>
   </div>
 
   <!-- Nội dung -->
@@ -48,6 +111,12 @@
     <h1>Ugphone - Download Clients</h1>
     <p>Các bản clone & file login</p>
     <p class="note">BY:𝙡𝙤𝙣𝙜𝙩ậ𝙥𝙝𝙖𝙘𝙠</p>
+
+    <!-- Nút Subscribe -->
+    <a href="https://www.youtube.com/@longtaphack" class="subscribe-btn" target="_blank" rel="noopener">
+      <span class="dot">👉</span> SUBSCRIBE CHO 𝙡𝙤𝙣𝙜𝙩ậ𝙥𝙝𝙖𝙘𝙠 NHE MỌI NGƯỜI <span class="dot">👈</span>
+    </a>
+
     <!-- Clients -->
     <div class="buttons">
       <div class="link-box"><a href="https://gofile.io/d/0yGRzF" target="_blank">📥 Client Delta QT 2.684 (clone)</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/0yGRzF')">📋</button></div>
@@ -67,7 +136,7 @@
     <p class="note">Copy nhanh script & key Roblox</p>
     <div class="buttons">
       <div class="link-box"><a>Speed Hub X (Script)</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua`, true))()')">📋</button></div>
-      <div class="link-box"><a>Speed Hub Key( vĩnh viễn )</a><button class="copy-btn" onclick="copyLink(this,'rcomyMQqaktlQeoiQbptMNaLdwpdpdeH')">📋</button></div>
+      <div class="link-box"><a>Speed Hub Key (vĩnh viễn)</a><button class="copy-btn" onclick="copyLink(this,'rcomyMQqaktlQeoiQbptMNaLdwpdpdeH')">📋</button></div>
       <div class="link-box"><a>Lumin Hub</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://lumin-hub.lol/loader.lua`,true))()')">📋</button></div>
       <div class="link-box"><a>Mercenaries Hub</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://raw.githubusercontent.com/kosowa/asd/refs/heads/main/GaG.lua`))()')">📋</button></div>
       <div class="link-box"><a>Nat Hub (cần key)</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://get.nathub.xyz/loader`))()')">📋</button></div>
@@ -92,12 +161,14 @@
   </div>
 
   <!-- Thông báo copied -->
-  <div id="toast" class="toast">✅ Đã copy link!</div>
+  <div id="toast" class="toast">✅ Đã copy!</div>
 
   <script>
     let isMuted = true;
+
     function toggleSound() {
       const iframe = document.getElementById("bg-video");
+      // YouTube Iframe Player API postMessage
       iframe.contentWindow.postMessage(
         JSON.stringify({ event: "command", func: isMuted ? "unMute" : "mute", args: [] }),
         "*"
@@ -105,16 +176,18 @@
       document.querySelector(".sound-btn").innerText = isMuted ? "🔇 Tắt tiếng" : "🔊 Bật tiếng";
       isMuted = !isMuted;
     }
+
     function copyLink(btn, link) {
       navigator.clipboard.writeText(link).then(() => {
-        let toast = document.getElementById("toast");
+        const toast = document.getElementById("toast");
         toast.classList.add("show");
-        setTimeout(() => toast.classList.remove("show"), 1500);
+        setTimeout(() => toast.classList.remove("show"), 1400);
         btn.textContent = "✅";
         btn.classList.add("copied");
-        setTimeout(() => { btn.textContent = "📋"; btn.classList.remove("copied"); }, 1500);
+        setTimeout(() => { btn.textContent = "📋"; btn.classList.remove("copied"); }, 1200);
       });
     }
+
     function toggleHUD() {
       document.getElementById("hud").classList.toggle("active");
     }
