@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Ugphone - Download Clients & Auto Buy</title>
+  <title>Ugphone & Roblox Hub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -10,8 +10,7 @@
 
     /* Video nền */
     .video-background { position: fixed; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
-    .video-background iframe { position: absolute; top: 50%; left: 50%;
-      width: 120%; height: 120%; transform: translate(-50%, -50%); }
+    .video-background iframe { position: absolute; top: 50%; left: 50%; width: 120%; height: 120%; transform: translate(-50%, -50%); }
 
     /* Nội dung */
     .content { position: relative; z-index: 1; text-align: center; padding: 40px 20px; color: white; }
@@ -19,46 +18,18 @@
     .content p { font-size: 20px; font-weight: bold; margin-bottom: 10px; color: rgba(255,255,255,0.9); }
     .note { font-size: 14px; color: rgba(255,255,255,0.7); font-style: italic; margin-bottom: 12px; }
 
-    /* Nút Subscribe */
-    .subscribe-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin: 16px 0 28px; padding: 12px 24px;
-      background-color: #ff3b30; color: #fff; font-weight: 800; font-size: 18px;
-      border-radius: 999px; cursor: pointer; text-decoration: none;
-      box-shadow: 0 6px 16px rgba(255,59,48,0.45), inset 0 -2px 0 rgba(0,0,0,0.15);
-      transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
-      user-select: none;
-      animation: pulse 1.8s infinite ease-in-out;
-    }
-    .subscribe-btn:hover { background-color: #e02d23; transform: translateY(-1px) scale(1.03); }
-    .subscribe-btn:active { transform: translateY(0) scale(0.99); }
-    .subscribe-btn .dot { font-size: 20px; }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 6px 16px rgba(255,59,48,0.45), 0 0 0 0 rgba(255,59,48,0.4); }
-      50% { box-shadow: 0 6px 16px rgba(255,59,48,0.55), 0 0 0 12px rgba(255,59,48,0); }
-    }
-
-    /* Danh sách link */
-    .buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+    /* Buttons copy */
+    .buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-bottom: 40px; }
     .link-box {
       display: flex; align-items: center; justify-content: space-between;
       min-width: 260px; max-width: 340px; padding: 12px 16px;
       background: rgba(0,0,0,0.5); border: 1px solid rgba(0,255,255,0.35);
-      border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s;
-      backdrop-filter: blur(2px);
+      border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s; backdrop-filter: blur(2px);
     }
     .link-box:hover { transform: translateY(-2px); box-shadow: 0 0 15px rgba(0,255,255,0.6); }
-    .link-box a {
-      flex: 1; text-align: left; color: #00ffcc; font-weight: bold;
-      text-decoration: none; font-size: 14px; transition: color 0.2s;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
+    .link-box a { flex: 1; text-align: left; color: #00ffcc; font-weight: bold; text-decoration: none; font-size: 14px; overflow: hidden; text-overflow: ellipsis; }
     .link-box a:hover { color: #fff; }
-    .copy-btn {
-      margin-left: 8px; padding: 6px 10px; background: rgba(255,255,255,0.2);
-      color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;
-      transition: background 0.3s, color 0.3s;
-    }
+    .copy-btn { margin-left: 8px; padding: 6px 10px; background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: background 0.3s, color 0.3s; }
     .copy-btn.copied { background: rgba(0,255,0,0.7); color: black; }
 
     /* Thông báo copied */
@@ -67,36 +38,23 @@
       opacity: 0; transition: opacity 0.4s; z-index: 3; }
     .toast.show { opacity: 1; }
 
-    /* Nút bật/tắt tiếng */
-    .sound-btn { position: fixed; bottom: 20px; right: 20px; z-index: 2;
-      padding: 10px 20px; background: rgba(0,0,0,0.6); color: white; border: none;
-      border-radius: 8px; cursor: pointer; font-size: 16px; transition: background 0.2s; }
-    .sound-btn:hover { background: rgba(0,0,0,0.8); }
-
     /* HUD toggle */
-    .hud-toggle {
-      position: fixed; top: 20px; right: 20px; background: #111; border: 1px solid #0f0;
+    .hud-toggle { position: fixed; top: 20px; right: 20px; background: #111; border: 1px solid #0f0;
       border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: #0f0; font-size: 20px; box-shadow: 0 0 10px #0f0; z-index: 1001;
-    }
-    .hud {
-      position: fixed; top: 70px; right: -270px; width: 260px;
+      cursor: pointer; color: #0f0; font-size: 20px; box-shadow: 0 0 10px #0f0; z-index: 1001; }
+    .hud { position: fixed; top: 70px; right: -270px; width: 260px;
       background: rgba(0,0,0,0.85); border: 1px solid #0f0; border-radius: 12px;
       padding: 15px; box-shadow: 0 0 15px #0f0; font-size: 14px; line-height: 1.4em;
-      transition: right 0.3s ease; z-index: 1000; color: #0f0;
-    }
+      transition: right 0.3s ease; z-index: 1000; color: #0f0; }
     .hud.active { right: 20px; }
     .hud h3 { margin: 0 0 10px 0; font-size: 16px; color: #0ff; }
     .hud ul { padding-left: 20px; margin: 0; }
     .hud li { margin-bottom: 6px; }
 
-    /* Form auto buy */
-    .auto-buy { margin-top: 40px; padding: 20px; background: rgba(0,0,0,0.7); border-radius: 12px; border: 1px solid #0ff; max-width: 600px; margin-left:auto;margin-right:auto;text-align:left;}
-    .auto-buy h2 { text-align:center; margin-bottom:16px; color:#0ff; }
-    .auto-buy label { display:block; margin:8px 0 4px; }
-    .auto-buy textarea { width:100%; height:80px; padding:8px; border-radius:6px; border:1px solid #0ff; background:#111; color:#0ff; resize:none; }
-    .auto-buy select, .auto-buy button { margin-top:8px; padding:8px; border-radius:6px; border:1px solid #0ff; background:#111; color:#0ff; cursor:pointer; }
-    .auto-buy pre { margin-top:12px; padding:8px; height:150px; overflow-y:auto; background:#111; border:1px solid #0ff; border-radius:6px; color:#0f0; }
+    /* Stock Box */
+    .stock-box { margin: 0 auto 40px auto; padding: 20px; max-width: 600px; text-align: left;
+      border: 1px solid #0ff; border-radius: 12px; background: rgba(0,0,0,0.7); }
+    .stock-box pre { height: 200px; overflow-y: auto; padding: 8px; border-radius:6px; border:1px solid #0ff; background:#111; color:#0f0; }
   </style>
 </head>
 <body>
@@ -108,103 +66,47 @@
   </div>
 
   <div class="content">
-    <h1>Ugphone - Download Clients</h1>
-    <p>Các bản clone & file login</p>
-    <p class="note">BY:𝙡𝙤𝙣𝙜𝙩ậ𝙥𝙝𝙖𝙘𝙠</p>
-
-    <a href="https://www.youtube.com/@longtaphack" class="subscribe-btn" target="_blank" rel="noopener">
-      <span class="dot">👉</span> SUBSCRIBE CHO 𝙡𝙤𝙣𝙜𝙩ậ𝙥𝙝𝙖𝙘𝙠 NHE MỌI NGƯỜI <span class="dot">👈</span>
-    </a>
+    <h1>Ugphone & Roblox Hub</h1>
+    <p class="note">BY: 𝙡𝙤𝙣𝙜𝙩ậ𝙥𝙝𝙖𝙘𝙠</p>
 
     <!-- Clients -->
+    <h2>📥 Roblox Clients & Script Hub</h2>
     <div class="buttons">
-      <div class="link-box"><a href="https://gofile.io/d/0yGRzF" target="_blank">📥 Client Delta QT 2.684 (clone)</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/0yGRzF')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/S9VMha" target="_blank">📥 File login VNG Client Delta</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/S9VMha')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/6zCkgB" target="_blank">📥 Client ArceusX QT 2.684/1.7.7</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/6zCkgB')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/6zCkgB" target="_blank">📥 Client CodeX QT 2.684</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/6zCkgB')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/wRZmnn" target="_blank">📥 Client Cryptic QT 2.684</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/wRZmnn')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/wRZmnn" target="_blank">📥 Client Ronix quốc tế</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/wRZmnn')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/EPTEWr" target="_blank">📥 Client Trigon quốc tế</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/EPTEWr')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/TVTQAQ" target="_blank">📥 File login VNG Client Trigon</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/TVTQAQ')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/qYqrkd" target="_blank">📥 Client FrostWare quốc tế</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/qYqrkd')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/sfomGy" target="_blank">📥 Client Krnl QT</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/sfomGy')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/Hw97N3" target="_blank">📥 Client Krnl VNG</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/Hw97N3')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/3efCho" target="_blank">📥 File login VNG Client FrostWare</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/3efCho')">📋</button></div>
-    </div>
-
-    <!-- Script Hub -->
-    <h1 style="margin-top:60px;">⚡ Script Hub</h1>
-    <p class="note">Copy nhanh script & key Roblox</p>
-    <div class="buttons">
+      <div class="link-box"><a href="https://gofile.io/d/0yGRzF" target="_blank">Client Delta QT 2.684</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/0yGRzF')">📋</button></div>
+      <div class="link-box"><a href="https://gofile.io/d/S9VMha" target="_blank">File login VNG Client Delta</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/S9VMha')">📋</button></div>
+      <div class="link-box"><a href="https://gofile.io/d/6zCkgB" target="_blank">Client ArceusX QT 2.684/1.7.7</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/6zCkgB')">📋</button></div>
+      <div class="link-box"><a href="https://gofile.io/d/wRZmnn" target="_blank">Client Cryptic QT 2.684</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/wRZmnn')">📋</button></div>
       <div class="link-box"><a>Speed Hub X (Script)</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua`, true))()')">📋</button></div>
       <div class="link-box"><a>Speed Hub Key (vĩnh viễn)</a><button class="copy-btn" onclick="copyLink(this,'rcomyMQqaktlQeoiQbptMNaLdwpdpdeH')">📋</button></div>
-      <div class="link-box"><a>Lumin Hub</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://lumin-hub.lol/loader.lua`,true))()')">📋</button></div>
-      <div class="link-box"><a>Mercenaries Hub</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://raw.githubusercontent.com/kosowa/asd/refs/heads/main/GaG.lua`))()')">📋</button></div>
-      <div class="link-box"><a>Nat Hub (cần key)</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://get.nathub.xyz/loader`))()')">📋</button></div>
-      <div class="link-box"><a>ThunderZ Hub</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/GaG/Main.lua`))()')">📋</button></div>
     </div>
 
-    <!-- Auto Buy Ugphone -->
-    <div class="auto-buy">
-      <h2>💻 Ugphone Auto Buy</h2>
-      <label for="localStorageInput">Dán LocalStorage Ugphone:</label>
-      <textarea id="localStorageInput" placeholder='Dán JSON LocalStorage ở đây'></textarea>
-      <label for="regionSelect">Chọn server:</label>
-      <select id="regionSelect">
-        <option value="">Chọn server...</option>
-        <option value="Hong Kong">Hong Kong</option>
-        <option value="Singapore">Singapore</option>
-        <option value="Japan">Japan</option>
-        <option value="Germany">Germany</option>
-        <option value="America">America</option>
-      </select>
-      <button id="autoBuyBtn">Bắt đầu mua tự động</button>
-      <pre id="logBox">⸻ Log sẽ hiển thị ở đây ⸻</pre>
+    <!-- Stock Box -->
+    <h2>📊 Ugphone Stock</h2>
+    <div class="stock-box">
       <pre id="stockBox">⸻ Stock cập nhật ⸻</pre>
     </div>
   </div>
 
-  <!-- Nút bật/tắt tiếng -->
-  <button class="sound-btn" onclick="toggleSound()">🔊 Bật tiếng</button>
-
-  <!-- Nút HUD toggle -->
+  <!-- HUD toggle -->
   <div class="hud-toggle" onclick="toggleHUD()">⚙</div>
-
-  <!-- HUD -->
   <div class="hud" id="hud">
     <h3>🔔 Last Update</h3>
     <ul>
-      <li>19/08/2025: cho thêm 1 vài script</li>
-      <li>???</li>
-      <li>???</li>
+      <li>19/08/2025: Thêm Roblox clients & script</li>
+      <li>??</li>
+      <li>??</li>
     </ul>
   </div>
 
-  <!-- Thông báo copied -->
   <div id="toast" class="toast">✅ Đã copy!</div>
 
   <script>
-    let isMuted = true;
-    let autoBuyInterval;
-    let stockInterval;
-
-    function toggleSound() {
-      const iframe = document.getElementById("bg-video");
-      iframe.contentWindow.postMessage(
-        JSON.stringify({ event: "command", func: isMuted ? "unMute" : "mute", args: [] }),
-        "*"
-      );
-      document.querySelector(".sound-btn").innerText = isMuted ? "🔇 Tắt tiếng" : "🔊 Bật tiếng";
-      isMuted = !isMuted;
-    }
-
     function copyLink(btn, link) {
       navigator.clipboard.writeText(link).then(() => {
         const toast = document.getElementById("toast");
         toast.classList.add("show");
         setTimeout(() => toast.classList.remove("show"), 1400);
-        btn.textContent = "✅";
-        btn.classList.add("copied");
+        btn.textContent = "✅"; btn.classList.add("copied");
         setTimeout(() => { btn.textContent = "📋"; btn.classList.remove("copied"); }, 1200);
       });
     }
@@ -213,55 +115,15 @@
       document.getElementById("hud").classList.toggle("active");
     }
 
-    // Auto Buy
+    // Stock auto update
     async function fetchStock() {
       try {
         const res = await fetch('https://meows.io.vn/call-ugphone-status');
         const data = await res.json();
         document.getElementById('stockBox').textContent = JSON.stringify(data, null, 2);
-        return data;
-      } catch(e) { console.error(e); return null; }
+      } catch(e) { console.error(e); }
     }
-
-    async function buyUgphone(localStorageJSON, region) {
-      if(!localStorageJSON || !region) return;
-      const token = localStorageJSON['UGPHONE-Token'];
-      if(!token) {
-        appendLog('⚠ Token không hợp lệ');
-        return;
-      }
-      try {
-        const res = await fetch('https://meows.io.vn/call-ugphone-buy', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({region: region, token: token})
-        });
-        const data = await res.json();
-        appendLog(JSON.stringify(data));
-      } catch(e) {
-        appendLog('❌ Lỗi mua: '+e.message);
-      }
-    }
-
-    function appendLog(msg) {
-      const logBox = document.getElementById('logBox');
-      logBox.textContent += msg + '\n';
-      logBox.scrollTop = logBox.scrollHeight;
-    }
-
-    document.getElementById('autoBuyBtn').addEventListener('click', () => {
-      if(autoBuyInterval) { clearInterval(autoBuyInterval); autoBuyInterval=null; appendLog('⏹ Auto Buy đã dừng'); return; }
-      let localStorageJSON;
-      try { localStorageJSON = JSON.parse(document.getElementById('localStorageInput').value); } 
-      catch(e) { appendLog('❌ JSON LocalStorage không hợp lệ'); return; }
-      const region = document.getElementById('regionSelect').value;
-      if(!region) { appendLog('❌ Chưa chọn server'); return; }
-      appendLog('▶ Bắt đầu Auto Buy tại '+region);
-      autoBuyInterval = setInterval(()=>buyUgphone(localStorageJSON, region), 5000);
-    });
-
-    // Stock auto update
-    stockInterval = setInterval(fetchStock, 15000);
+    setInterval(fetchStock, 15000);
     fetchStock();
   </script>
 </body>
