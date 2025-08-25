@@ -1,151 +1,156 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <title>Ugphone & Roblox Hub</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: Arial, sans-serif; overflow-x:hidden; background:#111; color:#fff; }
+<meta charset="UTF-8" />
+<title>Ugphone & Roblox Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Arial,sans-serif;overflow-x:hidden;background:#111;color:#fff;}
 
-    /* Video nền */
-    .video-background { position:fixed; inset:0; overflow:hidden; z-index:-1; pointer-events:none; }
-    .video-background iframe { position:absolute; top:50%; left:50%; width:120%; height:120%; transform:translate(-50%,-50%); }
+/* Video nền */
+.video-background{position:fixed;inset:0;overflow:hidden;z-index:-1;pointer-events:none;}
+.video-background iframe{position:absolute;top:50%;left:50%;width:120%;height:120%;transform:translate(-50%,-50%);}
 
-    /* Nội dung */
-    .content { position:relative; z-index:1; text-align:center; padding:40px 20px; color:white; }
-    .content h1 { font-size:48px; font-weight:900; text-shadow:2px 2px 10px rgba(0,0,0,0.8); margin-bottom:10px; }
-    .content p { font-size:20px; font-weight:bold; margin-bottom:10px; color:rgba(255,255,255,0.9); }
-    .note { font-size:14px; color:rgba(255,255,255,0.7); font-style:italic; margin-bottom:12px; }
+/* Nội dung */
+.content{position:relative;z-index:1;text-align:center;padding:40px 20px;color:white;}
+.content h1{font-size:48px;font-weight:900;text-shadow:2px 2px 10px rgba(0,0,0,0.8);margin-bottom:10px;}
+.content p{font-size:20px;font-weight:bold;margin-bottom:10px;color:rgba(255,255,255,0.9);}
+.note{font-size:14px;color:rgba(255,255,255,0.7);font-style:italic;margin-bottom:12px;}
 
-    /* Nút Subscribe */
-    .subscribe-btn { display:inline-flex; align-items:center; gap:8px; margin:16px 0 28px; padding:12px 24px;
-      background-color:#ff3b30; color:#fff; font-weight:800; font-size:18px; border-radius:999px; cursor:pointer;
-      text-decoration:none; box-shadow:0 6px 16px rgba(255,59,48,0.45), inset 0 -2px 0 rgba(0,0,0,0.15);
-      transition: transform .15s ease, background .2s ease, box-shadow .2s ease; animation:pulse 1.8s infinite ease-in-out;
-    }
-    .subscribe-btn:hover { background-color:#e02d23; transform:translateY(-1px) scale(1.03); }
-    .subscribe-btn:active { transform:translateY(0) scale(0.99); }
-    @keyframes pulse {
-      0%,100% { box-shadow:0 6px 16px rgba(255,59,48,0.45), 0 0 0 0 rgba(255,59,48,0.4); }
-      50% { box-shadow:0 6px 16px rgba(255,59,48,0.55), 0 0 0 12px rgba(255,59,48,0); }
-    }
+/* Nút Subscribe */
+.subscribe-btn{display:inline-flex;align-items:center;gap:8px;margin:16px 0 28px;padding:12px 24px;
+background-color:#ff3b30;color:#fff;font-weight:800;font-size:18px;border-radius:999px;cursor:pointer;
+text-decoration:none;box-shadow:0 6px 16px rgba(255,59,48,0.45), inset 0 -2px 0 rgba(0,0,0,0.15);
+transition: transform .15s ease, background .2s ease, box-shadow .2s ease;animation:pulse 1.8s infinite ease-in-out;}
+.subscribe-btn:hover{background-color:#e02d23;transform:translateY(-1px) scale(1.03);}
+.subscribe-btn:active{transform:translateY(0) scale(0.99);}
+@keyframes pulse{0%,100%{box-shadow:0 6px 16px rgba(255,59,48,0.45),0 0 0 0 rgba(255,59,48,0.4);}50%{box-shadow:0 6px 16px rgba(255,59,48,0.55),0 0 0 12px rgba(255,59,48,0);}}
 
-    /* Buttons copy */
-    .buttons { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-bottom:40px; }
-    .link-box { display:flex; align-items:center; justify-content:space-between; min-width:260px; max-width:340px; padding:12px 16px;
-      background:rgba(0,0,0,0.5); border:1px solid rgba(0,255,255,0.35); border-radius:10px; transition:transform 0.2s, box-shadow 0.2s; backdrop-filter:blur(2px); }
-    .link-box:hover { transform:translateY(-2px); box-shadow:0 0 15px rgba(0,255,255,0.6); }
-    .link-box a { flex:1; text-align:left; color:#00ffcc; font-weight:bold; text-decoration:none; font-size:14px; overflow:hidden; text-overflow:ellipsis; }
-    .link-box a:hover { color:#fff; }
-    .copy-btn { margin-left:8px; padding:6px 10px; background:rgba(255,255,255,0.2); color:white; border:none; border-radius:6px; cursor:pointer; font-size:14px; transition:background 0.3s,color 0.3s; }
-    .copy-btn.copied { background:rgba(0,255,0,0.7); color:black; }
+/* Buttons copy */
+.buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-bottom:40px;}
+.link-box{display:flex;align-items:center;justify-content:space-between;min-width:260px;max-width:340px;padding:12px 16px;
+background:rgba(0,0,0,0.5);border:1px solid rgba(0,255,255,0.35);border-radius:10px;transition:transform 0.2s, box-shadow 0.2s;backdrop-filter:blur(2px);}
+.link-box:hover{transform:translateY(-2px);box-shadow:0 0 15px rgba(0,255,255,0.6);}
+.link-box a{flex:1;text-align:left;color:#00ffcc;font-weight:bold;text-decoration:none;font-size:14px;overflow:hidden;text-overflow:ellipsis;}
+.link-box a:hover{color:#fff;}
+.copy-btn{margin-left:8px;padding:6px 10px;background:rgba(255,255,255,0.2);color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px;transition:background 0.3s,color 0.3s;}
+.copy-btn.copied{background:rgba(0,255,0,0.7);color:black;}
 
-    /* Stock Box đẹp */
-    .stock-box { margin:0 auto 40px auto; padding:20px; max-width:700px; border-radius:12px; background:rgba(0,0,0,0.7); border:1px solid #0ff; }
-    .stock-box h3 { color:#0ff; margin-bottom:12px; }
-    .stock-box table { width:100%; border-collapse:collapse; }
-    .stock-box th, .stock-box td { padding:8px 12px; border:1px solid rgba(0,255,255,0.35); text-align:left; font-size:14px; }
-    .stock-box th { background:rgba(0,255,255,0.15); color:#0ff; }
+/* Stock Box đẹp */
+.stock-box{margin:0 auto 40px auto;padding:20px;max-width:700px;border-radius:12px;background:rgba(0,0,0,0.7);border:1px solid #0ff;}
+.stock-box h3{color:#0ff;margin-bottom:12px;}
+.stock-box table{width:100%;border-collapse:collapse;}
+.stock-box th, .stock-box td{padding:8px 12px;border:1px solid rgba(0,255,255,0.35);text-align:left;font-size:14px;}
+.stock-box th{background:rgba(0,255,255,0.15);color:#0ff;}
 
-    /* Thông báo copied */
-    .toast { position:fixed; bottom:60px; right:20px; background:rgba(0,0,0,0.85); color:#fff; padding:10px 20px; border-radius:6px; font-size:14px; opacity:0; transition:opacity 0.4s; z-index:3; }
-    .toast.show { opacity:1; }
+/* HUD toggle */
+.hud-toggle{position:fixed;top:20px;right:20px;background:#111;border:1px solid #0f0;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#0f0;font-size:20px;box-shadow:0 0 10px #0f0;z-index:1001;}
+.hud{position:fixed;top:70px;right:-270px;width:260px;background:rgba(0,0,0,0.85);border:1px solid #0f0;border-radius:12px;padding:15px;box-shadow:0 0 15px #0f0;font-size:14px;line-height:1.4em;transition:right 0.3s ease;z-index:1000;color:#0f0;}
+.hud.active{right:20px;}
+.hud h3{margin:0 0 10px 0;font-size:16px;color:#0ff;}
+.hud ul{padding-left:20px;margin:0;}
+.hud li{margin-bottom:6px;}
 
-    /* Nút HUD toggle */
-    .hud-toggle { position:fixed; top:20px; right:20px; background:#111; border:1px solid #0f0; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#0f0; font-size:20px; box-shadow:0 0 10px #0f0; z-index:1001; }
-    .hud { position:fixed; top:70px; right:-270px; width:260px; background:rgba(0,0,0,0.85); border:1px solid #0f0; border-radius:12px; padding:15px; box-shadow:0 0 15px #0f0; font-size:14px; line-height:1.4em; transition:right 0.3s ease; z-index:1000; color:#0f0; }
-    .hud.active { right:20px; }
-    .hud h3 { margin:0 0 10px 0; font-size:16px; color:#0ff; }
-    .hud ul { padding-left:20px; margin:0; }
-    .hud li { margin-bottom:6px; }
-
-    /* Responsive */
-    @media(max-width:640px){ .content h1{ font-size:34px;} .content p{ font-size:16px;} .subscribe-btn{ font-size:16px; padding:10px 18px; } }
-  </style>
+/* Thông báo copied */
+.toast{position:fixed;bottom:60px;right:20px;background:rgba(0,0,0,0.85);color:#fff;padding:10px 20px;border-radius:6px;font-size:14px;opacity:0;transition:opacity 0.4s;z-index:3;}
+.toast.show{opacity:1;}
+</style>
 </head>
 <body>
-  <!-- Video YouTube nền -->
-  <div class="video-background">
-    <iframe id="bg-video" src="https://www.youtube.com/embed/w4ANXtInE5o?autoplay=1&mute=1&loop=1&playlist=w4ANXtInE5o&controls=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>
-  </div>
 
-  <div class="content">
-    <h1>Ugphone & Roblox Hub</h1>
-    <p class="note">BY: 𝙡𝙤𝙣𝙜𝙩ậ𝙥𝙝𝙖𝙘𝙠</p>
-    <a href="https://www.youtube.com/@longtaphack" class="subscribe-btn" target="_blank" rel="noopener">👉 SUBSCRIBE CHO 𝙡𝙤𝙣𝙜𝙩ậ𝙥𝙝𝙖𝙘𝙠 NHE MỌI NGƯỜI 👈</a>
+<div class="video-background">
+  <iframe id="bg-video" src="https://www.youtube.com/embed/w4ANXtInE5o?autoplay=1&mute=1&loop=1&playlist=w4ANXtInE5o&controls=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+</div>
 
-    <h2>📥 Roblox Clients & Script Hub</h2>
-    <div class="buttons">
-      <div class="link-box"><a href="https://gofile.io/d/0yGRzF" target="_blank">Client Delta QT 2.684</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/0yGRzF')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/S9VMha" target="_blank">File login VNG Client Delta</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/S9VMha')">📋</button></div>
-      <div class="link-box"><a href="https://gofile.io/d/6zCkgB" target="_blank">Client ArceusX QT 2.684/1.7.7</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/6zCkgB')">📋</button></div>
-      <div class="link-box"><a>Speed Hub X (Script)</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua`, true))()')">📋</button></div>
-      <div class="link-box"><a>Speed Hub Key (vĩnh viễn)</a><button class="copy-btn" onclick="copyLink(this,'rcomyMQqaktlQeoiQbptMNaLdwpdpdeH')">📋</button></div>
-    </div>
+<div class="content">
+<h1>Ugphone & Roblox Hub</h1>
+<p class="note">BY: 𝙡𝙤𝙣𝙜𝙩ậ𝙥𝙝𝙖𝙘𝙠</p>
+<a href="https://www.youtube.com/@longtaphack" class="subscribe-btn" target="_blank" rel="noopener">👉 SUBSCRIBE CHO 𝙡𝙤𝙣𝙜𝙩ậ𝙥𝙝𝙖𝙘𝙠 NHE MỌI NGƯỜI 👈</a>
 
-    <h2>📊 Ugphone Stock</h2>
-    <div class="stock-box">
-      <h3>Stock cập nhật</h3>
-      <table id="stockTable">
-        <thead>
-          <tr><th>Client</th><th>Trạng thái</th><th>Số lượng</th></tr>
-        </thead>
-        <tbody>
-          <tr><td colspan="3">Đang tải dữ liệu...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<h2>📥 Roblox Clients & Script Hub</h2>
+<div class="buttons">
+  <div class="link-box"><a href="https://gofile.io/d/0yGRzF" target="_blank">Client Delta QT 2.684</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/0yGRzF')">📋</button></div>
+  <div class="link-box"><a href="https://gofile.io/d/S9VMha" target="_blank">File login VNG Client Delta</a><button class="copy-btn" onclick="copyLink(this,'https://gofile.io/d/S9VMha')">📋</button></div>
+  <div class="link-box"><a>Speed Hub X (Script)</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua`, true))()')">📋</button></div>
+  <div class="link-box"><a>Speed Hub Key (vĩnh viễn)</a><button class="copy-btn" onclick="copyLink(this,'rcomyMQqaktlQeoiQbptMNaLdwpdpdeH')">📋</button></div>
+  <div class="link-box"><a>Lumin Hub</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:Http:Get(`https://lumin-hub.lol/loader.lua`,true))()')">📋</button></div>
+  <div class="link-box"><a>Mercenaries Hub</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://raw.githubusercontent.com/kosowa/asd/refs/heads/main/GaG.lua`))()')">📋</button></div>
+  <div class="link-box"><a>Nat Hub (cần key)</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://get.nathub.xyz/loader`))()')">📋</button></div>
+  <div class="link-box"><a>ThunderZ Hub</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/GaG/Main.lua`))()')">📋</button></div>
+</div>
+<h2>📊 Ugphone Stock</h2>
+<div class="stock-box">
+  <h3>📦 Tình trạng stock</h3>
+  <table id="stockTable">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Status</th>
+        <th>Số lượng</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="3">Đang tải dữ liệu...</td></tr>
+    </tbody>
+  </table>
+</div>
 
-  <div class="hud-toggle" onclick="toggleHUD()">⚙</div>
-  <div class="hud" id="hud">
-    <h3>🔔 Last Update</h3>
-    <ul>
-      <li>19/08/2025: Thêm Roblox clients & script</li>
-      <li>??</li>
-      <li>??</li>
-    </ul>
-  </div>
+</div>
 
-  <div id="toast" class="toast">✅ Đã copy!</div>
+<!-- HUD toggle -->
+<div class="hud-toggle" onclick="toggleHUD()">⚙</div>
+<div class="hud" id="hud">
+  <h3>🔔 Last Update</h3>
+  <ul>
+    <li>19/08/2025: Thêm Roblox clients & script</li>
+    <li>??</li>
+    <li>??</li>
+  </ul>
+</div>
 
-  <script>
-    let isMuted = true;
-    function toggleSound() {
-      const iframe=document.getElementById("bg-video");
-      iframe.contentWindow.postMessage(JSON.stringify({event:"command",func:isMuted?"unMute":"mute",args:[]}),"*");
-      document.querySelector(".sound-btn").innerText=isMuted?"🔇 Tắt tiếng":"🔊 Bật tiếng";
-      isMuted=!isMuted;
-    }
+<div id="toast" class="toast">✅ Đã copy!</div>
 
-    function copyLink(btn, link){
-      navigator.clipboard.writeText(link).then(()=>{
-        const toast=document.getElementById("toast");
-        toast.classList.add("show");
-        setTimeout(()=>toast.classList.remove("show"),1400);
-        btn.textContent="✅"; btn.classList.add("copied");
-        setTimeout(()=>{btn.textContent="📋"; btn.classList.remove("copied");},1200);
+<script>
+function copyLink(btn, link) {
+  navigator.clipboard.writeText(link).then(() => {
+    const toast = document.getElementById("toast");
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 1400);
+    btn.textContent = "✅"; btn.classList.add("copied");
+    setTimeout(() => { btn.textContent = "📋"; btn.classList.remove("copied"); }, 1200);
+  });
+}
+
+function toggleHUD() {
+  document.getElementById("hud").classList.toggle("active");
+}
+
+// Stock auto update
+async function fetchStock() {
+  const tbody = document.querySelector('#stockTable tbody');
+  tbody.innerHTML = `<tr><td colspan="3">Đang tải dữ liệu...</td></tr>`;
+  try {
+    const res = await fetch('https://meows.io.vn/call-ugphone-status');
+    const data = await res.json();
+    if(Array.isArray(data) && data.length){
+      tbody.innerHTML = '';
+      data.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${item.client||'---'}</td><td>${item.status||'---'}</td><td>${item.quantity||'---'}</td>`;
+        tbody.appendChild(tr);
       });
+    } else {
+      tbody.innerHTML = `<tr><td colspan="3">Không có dữ liệu</td></tr>`;
     }
+  } catch(e){
+    tbody.innerHTML = `<tr><td colspan="3">Lỗi tải dữ liệu</td></tr>`;
+    console.error(e);
+  }
+}
 
-    function toggleHUD(){ document.getElementById("hud").classList.toggle("active"); }
-
-    // Stock auto update
-    async function fetchStock(){
-      try{
-        const res=await fetch('https://meows.io.vn/call-ugphone-status');
-        const data=await res.json();
-        const tbody = document.getElementById('stockTable').querySelector('tbody');
-        tbody.innerHTML='';
-        for(const item of data){
-          const tr=document.createElement('tr');
-          tr.innerHTML=`<td>${item.client||"?"}</td><td>${item.status||"?"}</td><td>${item.quantity||"?"}</td>`;
-          tbody.appendChild(tr);
-        }
-      }catch(e){ console.error(e); }
-    }
-    setInterval(fetchStock,15000); fetchStock();
-  </script>
+setInterval(fetchStock, 15000);
+fetchStock();
+</script>
 </body>
 </html>
