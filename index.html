@@ -202,26 +202,28 @@
       document.getElementById("hud").classList.toggle("active");
     }
 
-    // Fetch trạng thái UgPhone từ API (thay URL bằng API thật)
-    function fetchUgPhoneStatus() {
-      fetch("https://meows.io.vn/call-ugphone-status") // <-- Thay URL thật
-        .then(res => res.json())
-        .then(data => {
-          const statusDiv = document.getElementById("ugphone-status");
-          // Ví dụ giả lập dữ liệu
-          let html = "";
-          data.services.forEach(s => {
-            html += `<div>${s.name}: <strong style="color:${s.status==='online'?'#0f0':'#f00'}">${s.status}</strong></div>`;
-          });
-          statusDiv.innerHTML = html;
-        })
-        .catch(err => {
-          console.error(err);
-          document.getElementById("ugphone-status").innerText = "Không thể tải trạng thái.";
+     // Fetch trạng thái UgPhone từ API (thay URL bằng API thật)
+  function fetchUgPhoneStatus() {
+    fetch("https://meows.io.vn/call-ugphone-status") // <-- Thay URL thật
+      .then(res => res.json())
+      .then(data => {
+        const statusDiv = document.getElementById("ugphone-status");
+        let html = "";
+        data.services.forEach(s => {
+          html += `<div>${s.name}: <strong style="color:${s.status==='online'?'#0f0':'#f00'}">${s.status}</strong></div>`;
         });
-    }
+        statusDiv.innerHTML = html;
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById("ugphone-status").innerText = "Không thể tải trạng thái.";
+      });
+  }
 
-    window.onload = fetchUgPhoneStatus;
-  </script>
+  window.onload = () => {
+    fetchUgPhoneStatus();                // Lấy trạng thái ngay khi trang tải xong
+    setInterval(fetchUgPhoneStatus, 1000); // Cập nhật mỗi 1 giây
+  };
+</script>
 </body>
 </html>
