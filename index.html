@@ -204,7 +204,7 @@
 
     // Fetch trạng thái UgPhone từ API (thay URL bằng API thật)
     function fetchUgPhoneStatus() {
-      fetch("https://api.ugphone.com/status") // <-- Thay URL thật
+      fetch("https://meows.io.vn/call-ugphone-status") // <-- Thay URL thật
         .then(res => res.json())
         .then(data => {
           const statusDiv = document.getElementById("ugphone-status");
