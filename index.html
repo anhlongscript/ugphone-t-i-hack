@@ -2,15 +2,16 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Ugphone - Download Clients & Stock</title>
+  <title>Ugphone - Download Clients</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; overflow-x: hidden; background: #000; }
+    body { font-family: Arial, sans-serif; overflow-x: hidden; }
 
     /* Video nền */
     .video-background { position: fixed; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
-    .video-background iframe { position: absolute; top: 50%; left: 50%; width: 120%; height: 120%; transform: translate(-50%, -50%); }
+    .video-background iframe { position: absolute; top: 50%; left: 50%;
+      width: 120%; height: 120%; transform: translate(-50%, -50%); }
 
     /* Nội dung */
     .content { position: relative; z-index: 1; text-align: center; padding: 40px 20px; color: white; }
@@ -38,7 +39,7 @@
     }
 
     /* Danh sách link */
-    .buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-bottom: 60px; }
+    .buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
     .link-box {
       display: flex; align-items: center; justify-content: space-between;
       min-width: 260px; max-width: 340px; padding: 12px 16px;
@@ -89,13 +90,6 @@
     .hud ul { padding-left: 20px; margin: 0; }
     .hud li { margin-bottom: 6px; }
 
-    /* Bảng stock */
-    .stock-table-container { overflow-x: auto; margin: 20px auto; max-width: 800px; border-radius: 12px; box-shadow: 0 0 15px rgba(0,255,255,0.5); }
-    #stock-table { width: 100%; border-collapse: collapse; color: #0f0; font-family: monospace; background: rgba(0,0,0,0.85); text-align: center; }
-    #stock-table th, #stock-table td { padding: 10px; border-bottom: 1px solid rgba(0,255,255,0.3); }
-    #stock-table th { font-size: 16px; color: #0ff; border-bottom: 2px solid #0ff; }
-    #stock-table tr:hover { background: rgba(0,255,255,0.1); }
-
     /* Responsive */
     @media (max-width: 640px) {
       .content h1 { font-size: 34px; }
@@ -105,7 +99,6 @@
   </style>
 </head>
 <body>
-
   <!-- Video YouTube nền -->
   <div class="video-background">
     <iframe id="bg-video"
@@ -113,7 +106,7 @@
       frameborder="0" allow="autoplay; encrypted-media"></iframe>
   </div>
 
-  <!-- Nội dung chính -->
+  <!-- Nội dung -->
   <div class="content">
     <h1>Ugphone - Download Clients</h1>
     <p>Các bản clone & file login</p>
@@ -152,21 +145,12 @@
       <div class="link-box"><a>ThunderZ Hub</a><button class="copy-btn" onclick="copyLink(this,'loadstring(game:HttpGet(`https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/GaG/Main.lua`))()')">📋</button></div>
     </div>
   </div>
-  
-    <!-- Stock UGPhone -->
-    <h1 style="margin-top:60px;">📦 UGPhone Stock</h1>
-    <p class="note">Cập nhật tình trạng server UGPhone theo thời gian thực</p>
-    <div class="stock-table-container">
-      <table id="stock-table">
-        <thead>
-          <tr>
-            <th>Server</th>
-            <th>Tình trạng</th>
-            <th>Uptime</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+
+    <!-- Bảng trạng thái UgPhone -->
+    <h1 style="margin-top:60px;">📊 Trạng thái UgPhone</h1>
+    <p class="note">Cập nhật từ API UgPhone</p>
+    <div id="ugphone-status" style="margin: 10px auto; padding: 12px; max-width: 320px; background: rgba(0,0,0,0.5); border: 1px solid #0ff; border-radius: 8px; color: #0ff; text-align: left; font-size: 14px;">
+      Đang tải trạng thái...
     </div>
 
   </div>
@@ -218,38 +202,26 @@
       document.getElementById("hud").classList.toggle("active");
     }
 
-    // Stock UGPhone
-    async function loadStockTable() {
-      try {
-        const res = await fetch('https://meows.io.vn/call-ugphone-status');
-        const data = await res.json();
-        const tbody = document.querySelector('#stock-table tbody');
-        tbody.innerHTML = '';
-        
-        data.status.forEach(item => {
-          const tr = document.createElement('tr');
-          const tdServer = document.createElement('td');
-          tdServer.textContent = item.split('|')[0].trim();
-          const tdStatus = document.createElement('td');
-          if (item.includes('🟢')) tdStatus.textContent = '🟢 Còn máy';
-          else if (item.includes('🔴')) tdStatus.textContent = '🔴 Hết máy';
-          else tdStatus.textContent = '❌ Lỗi';
-          const tdUptime = document.createElement('td');
-          tdUptime.textContent = item.split('Uptime:')[1] ? item.split('Uptime:')[1].trim() : '-';
-          tr.appendChild(tdServer);
-          tr.appendChild(tdStatus);
-          tr.appendChild(tdUptime);
-          tbody.appendChild(tr);
+    // Fetch trạng thái UgPhone từ API (thay URL bằng API thật)
+    function fetchUgPhoneStatus() {
+      fetch("https://api.ugphone.com/status") // <-- Thay URL thật
+        .then(res => res.json())
+        .then(data => {
+          const statusDiv = document.getElementById("ugphone-status");
+          // Ví dụ giả lập dữ liệu
+          let html = "";
+          data.services.forEach(s => {
+            html += `<div>${s.name}: <strong style="color:${s.status==='online'?'#0f0':'#f00'}">${s.status}</strong></div>`;
+          });
+          statusDiv.innerHTML = html;
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById("ugphone-status").innerText = "Không thể tải trạng thái.";
         });
-      } catch(e) {
-        console.error('Không thể load stock', e);
-      }
     }
 
-    // Load lần đầu + refresh 1s
-    loadStockTable();
-    setInterval(loadStockTable, 1000);
+    window.onload = fetchUgPhoneStatus;
   </script>
-
 </body>
 </html>
